@@ -10,11 +10,9 @@ class QuizScreen extends StatelessWidget {
   const QuizScreen({Key? key}) : super(key: key);
 
   @override
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => QuizState(),
-      child: const QuizScreenContent(),
-    );
+    return const QuizScreenContent();
   }
 }
 
@@ -22,7 +20,9 @@ class QuizScreenContent extends StatelessWidget {
   const QuizScreenContent({Key? key}) : super(key: key);
 
   void _submitQuiz(BuildContext context, QuizState quizState) {
-    final correctAnswers = quizQuestions.map((q) => q.correctAnswerIndex).toList();
+    final correctAnswers = quizQuestions
+        .map((q) => q.correctAnswerIndex)
+        .toList();
     quizState.calculateScore(quizQuestions.length, correctAnswers);
 
     Navigator.pushReplacement(
@@ -44,11 +44,14 @@ class QuizScreenContent extends StatelessWidget {
     final isTablet = screenSize.width > 600;
     final quizState = Provider.of<QuizState>(context);
     final currentQuestion = quizQuestions[quizState.currentQuestionIndex];
-    final isLastQuestion = quizState.currentQuestionIndex == quizQuestions.length - 1;
+    final isLastQuestion =
+        quizState.currentQuestionIndex == quizQuestions.length - 1;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pertanyaan ${quizState.currentQuestionIndex + 1}/${quizQuestions.length}'),
+        title: Text(
+          'Pertanyaan ${quizState.currentQuestionIndex + 1}/${quizQuestions.length}',
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -56,7 +59,9 @@ class QuizScreenContent extends StatelessWidget {
               context: context,
               builder: (ctx) => AlertDialog(
                 title: const Text('Keluar dari Kuis?'),
-                content: const Text('Progress Anda akan hilang. Apakah Anda yakin?'),
+                content: const Text(
+                  'Progress Anda akan hilang. Apakah Anda yakin?',
+                ),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(ctx),
@@ -80,9 +85,7 @@ class QuizScreenContent extends StatelessWidget {
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: Padding(
                   padding: EdgeInsets.all(isTablet ? 32.0 : 24.0),
                   child: Column(
@@ -92,9 +95,13 @@ class QuizScreenContent extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: LinearProgressIndicator(
-                          value: (quizState.currentQuestionIndex + 1) / quizQuestions.length,
+                          value:
+                              (quizState.currentQuestionIndex + 1) /
+                              quizQuestions.length,
                           minHeight: isTablet ? 12 : 10,
-                          backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.surfaceVariant,
                         ),
                       ),
                       SizedBox(height: isTablet ? 32 : 24),
@@ -115,13 +122,17 @@ class QuizScreenContent extends StatelessWidget {
                                       vertical: isTablet ? 8 : 6,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.primaryContainer,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primaryContainer,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Text(
                                       'Soal ${quizState.currentQuestionIndex + 1}',
                                       style: TextStyle(
-                                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimaryContainer,
                                         fontWeight: FontWeight.bold,
                                         fontSize: isTablet ? 16 : 14,
                                       ),
@@ -148,12 +159,21 @@ class QuizScreenContent extends StatelessWidget {
                       ...List.generate(
                         currentQuestion.options.length,
                         (index) => Padding(
-                          padding: EdgeInsets.only(bottom: isTablet ? 16.0 : 12.0),
+                          padding: EdgeInsets.only(
+                            bottom: isTablet ? 16.0 : 12.0,
+                          ),
                           child: AnswerCard(
                             answer: currentQuestion.options[index],
-                            isSelected: quizState.getAnswerForQuestion(quizState.currentQuestionIndex) == index,
+                            isSelected:
+                                quizState.getAnswerForQuestion(
+                                  quizState.currentQuestionIndex,
+                                ) ==
+                                index,
                             onTap: () {
-                              quizState.answerQuestion(quizState.currentQuestionIndex, index);
+                              quizState.answerQuestion(
+                                quizState.currentQuestionIndex,
+                                index,
+                              );
                             },
                             optionLabel: String.fromCharCode(65 + index),
                           ),
@@ -179,12 +199,18 @@ class QuizScreenContent extends StatelessWidget {
                             flex: quizState.currentQuestionIndex > 0 ? 1 : 1,
                             child: CustomButton(
                               text: isLastQuestion ? 'Selesai' : 'Selanjutnya',
-                              icon: isLastQuestion ? Icons.check : Icons.arrow_forward,
+                              icon: isLastQuestion
+                                  ? Icons.check
+                                  : Icons.arrow_forward,
                               onPressed: () {
-                                if (!quizState.hasAnsweredQuestion(quizState.currentQuestionIndex)) {
+                                if (!quizState.hasAnsweredQuestion(
+                                  quizState.currentQuestionIndex,
+                                )) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: const Text('Silakan pilih jawaban terlebih dahulu'),
+                                      content: const Text(
+                                        'Silakan pilih jawaban terlebih dahulu',
+                                      ),
                                       backgroundColor: Colors.orange,
                                       behavior: SnackBarBehavior.floating,
                                       shape: RoundedRectangleBorder(
