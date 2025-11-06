@@ -37,17 +37,11 @@ Aset dan referensi yang digunakan dalam pengembangan aplikasi ini:
 |:------------:|:------------:|:--------------:|
 | <img src="screenshots/home_screen.png" width="250"/> | <img src="screenshots/quiz_screen.png" width="250"/> | <img src="screenshots/result_screen.png" width="250"/> |
 
-> Simpan screenshot kamu di folder `screenshots/` agar tampil otomatis di GitHub.
-
----
-
-## 🎥 Video Demo
-[🎬 Klik di sini untuk melihat demo aplikasi](https://drive.google.com/your-demo-link)
 
 ---
 
 ## 🎨 Link Mockup / Prototype
-[📱 Figma Prototype - Quiz App](https://www.figma.com/your-prototype-link)
+[📱 Figma Prototype - Quiz App](https://www.figma.com/design/FWkXImaNJuAmNEpvBZroH8/Mock-up-uts?node-id=0-1&t=Qas0TUDwqmlEgoe3-1)
 
 ---
 
